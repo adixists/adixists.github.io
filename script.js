@@ -310,6 +310,27 @@ document.addEventListener('DOMContentLoaded', () => {
   // ========================
   const themeBtns = document.querySelectorAll('.theme-btn');
 
+  // Theme color palettes for logo gradients
+  const logoGradients = {
+    dark:   { c1: '#63b3ed', c2: '#9f7aea', c3: '#68d391' },
+    light:  { c1: '#2563eb', c2: '#7c3aed', c3: '#059669' },
+    purple: { c1: '#a78bfa', c2: '#e879f9', c3: '#818cf8' }
+  };
+
+  function updateLogoGradients(theme) {
+    const g = logoGradients[theme] || logoGradients.dark;
+    // Update all gradient definitions across all SVGs
+    const gradIds = ['logoGradDark', 'navLogoGrad', 'footerLogoGrad'];
+    gradIds.forEach(id => {
+      const grad = document.getElementById(id);
+      if (!grad) return;
+      const stops = grad.querySelectorAll('stop');
+      if (stops[0]) stops[0].setAttribute('stop-color', g.c1);
+      if (stops[1]) stops[1].setAttribute('stop-color', g.c2);
+      if (stops[2]) stops[2].setAttribute('stop-color', g.c3);
+    });
+  }
+
   function setTheme(theme) {
     document.documentElement.setAttribute('data-theme', theme);
     localStorage.setItem('portfolio-theme', theme);
@@ -318,6 +339,8 @@ document.addEventListener('DOMContentLoaded', () => {
     });
     // Re-init particles to update color
     initParticles();
+    // Update logo gradient colors to match theme
+    updateLogoGradients(theme);
   }
 
   // Load saved theme
