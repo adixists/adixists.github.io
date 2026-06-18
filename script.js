@@ -24,18 +24,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // ── Logo draw animation via Web Animations API (WAAPI)
   // This bypasses CSS @keyframes entirely — no var() issues.
-  // Sequence: A left leg → A right leg → T vertical → A crossbar → T top bar → dot
+  // Sequence: A left leg → A right leg with loop and T-bar → T vertical stem
   const strokeSequence = [
-    { id: 'l-s1', delay: 50,   dur: 900 },   // A left leg
-    { id: 'l-s2', delay: 450,  dur: 900 },   // A right leg
-    { id: 'l-s4', delay: 550,  dur: 850 },   // T vertical
-    { id: 'l-s3', delay: 750,  dur: 700 },   // A crossbar
-    { id: 'l-s5', delay: 950,  dur: 900 },   // T top bar
+    { id: 'l-s1', delay: 100,  dur: 950  },  // A left leg with serif
+    { id: 'l-s2', delay: 750,  dur: 1250 },  // A right leg, bottom loop, and T top-bar arch
+    { id: 'l-s3', delay: 1650, dur: 850  },  // T vertical stem with serifs
   ];
 
-  // Total logo animation time: 950 + 900 = 1850ms
-  // Dot pops at: 1950ms
-  // We hold loader for at least 2800ms so user sees the complete logo
+  // Total logo animation time: 1650 + 850 = 2500ms
+  // We hold loader for at least 3000ms so user sees the complete logo fully drawn.
 
   strokeSequence.forEach(cfg => {
     const el = document.getElementById(cfg.id);
@@ -65,27 +62,8 @@ document.addEventListener('DOMContentLoaded', () => {
     );
   });
 
-  // Animate the dot at the apex of the A
-  // Note: WAAPI animates CSS props only; 'r' is an SVG attribute so we use transform:scale
-  const dotEl = document.getElementById('l-dot');
-  if (dotEl) {
-    dotEl.style.transformOrigin = '90px 12px'; // centre of the circle
-    dotEl.animate(
-      [
-        { opacity: 0, transform: 'scale(0)' },
-        { opacity: 1, transform: 'scale(1)' }
-      ],
-      {
-        duration: 450,
-        delay:    1950,
-        easing:   'cubic-bezier(0.34, 1.56, 0.64, 1)',
-        fill:     'forwards'
-      }
-    );
-  }
-
   // ── Loader progress bar
-  const LOADER_MIN_MS = 2800; // hold loader so logo fully completes (1850ms + safety)
+  const LOADER_MIN_MS = 3000; // hold loader so logo fully completes (2500ms + safety)
   const loaderStart   = Date.now();
 
   let progress = 0;

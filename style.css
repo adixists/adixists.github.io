@@ -217,13 +217,8 @@ body:hover .cursor-outer { opacity: 1; }
 
 /* Draw-on animation — fully controlled by JS Web Animations API */
 /* JS sets stroke-dasharray and animates stroke-dashoffset to 0 */
-#l-s1, #l-s2, #l-s3, #l-s4, #l-s5 {
+#l-s1, #l-s2, #l-s3 {
   stroke-dashoffset: 9999;  /* hidden by default until JS runs */
-}
-
-#l-dot {
-  opacity: 0;
-  /* JS will animate this too */
 }
 
 
