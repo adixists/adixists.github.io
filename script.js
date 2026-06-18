@@ -26,13 +26,12 @@ document.addEventListener('DOMContentLoaded', () => {
   // This bypasses CSS @keyframes entirely — no var() issues.
   // Sequence: A left leg → A right leg with loop and T-bar → T vertical stem
   const strokeSequence = [
-    { id: 'l-s1', delay: 100,  dur: 950  },  // A left leg with serif
-    { id: 'l-s2', delay: 750,  dur: 1250 },  // A right leg, bottom loop, and T top-bar arch
-    { id: 'l-s3', delay: 1650, dur: 850  },  // T vertical stem with serifs
+    { id: 'l-s1', delay: 100,  dur: 800  },  // A left leg (short straight line)
+    { id: 'l-s2', delay: 600,  dur: 1500 },  // A right leg → teardrop loop → T arch (longest path)
+    { id: 'l-s3', delay: 1800, dur: 700  },  // T vertical stem
   ];
 
-  // Total logo animation time: 1650 + 850 = 2500ms
-  // We hold loader for at least 3000ms so user sees the complete logo fully drawn.
+  // Total: 1800 + 700 = 2500ms. Loader holds 3200ms minimum.
 
   strokeSequence.forEach(cfg => {
     const el = document.getElementById(cfg.id);
@@ -63,7 +62,7 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   // ── Loader progress bar
-  const LOADER_MIN_MS = 3000; // hold loader so logo fully completes (2500ms + safety)
+  const LOADER_MIN_MS = 3200; // hold loader so logo fully completes (2500ms + safety)
   const loaderStart   = Date.now();
 
   let progress = 0;
