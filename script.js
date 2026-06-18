@@ -22,47 +22,57 @@ document.addEventListener('DOMContentLoaded', () => {
     'Welcome! 🚀'
   ];
 
-  // ── Logo draw animation via Web Animations API (WAAPI)
-  // This bypasses CSS @keyframes entirely — no var() issues.
-  // Sequence: A left leg → A right leg with loop and T-bar → T vertical stem
-  const strokeSequence = [
-    { id: 'l-s1', delay: 100,  dur: 800  },  // A left leg (short straight line)
-    { id: 'l-s2', delay: 600,  dur: 1500 },  // A right leg → teardrop loop → T arch (longest path)
-    { id: 'l-s3', delay: 1800, dur: 700  },  // T vertical stem
-  ];
+  // ── Logo draw animation — uses requestAnimationFrame + SVG setAttribute
+  // This is the most compatible approach: no WAAPI, no CSS var() in keyframes.
+  // setAttribute sets SVG presentation attributes directly (always supported).
 
-  // Total: 1800 + 700 = 2500ms. Loader holds 3200ms minimum.
+  // Ease-out cubic: starts fast, decelerates to a stop
+  function easeOutCubic(t) { return 1 - Math.pow(1 - t, 3); }
 
-  strokeSequence.forEach(cfg => {
-    const el = document.getElementById(cfg.id);
-    if (!el) return;
+  // Animate a single path: dashoffset from len→0 over [delayMs..delayMs+durMs]
+  function animatePath(el, delayMs, durMs) {
+    let len;
+    try { len = el.getTotalLength(); } catch(e) { len = 300; }
+    len = Math.ceil(len) + 2;
 
-    // Measure actual path length
-    let len = 300;
-    try { len = el.getTotalLength(); } catch(e) {}
-    len = Math.ceil(len) + 4; // small buffer
+    // Set initial state via SVG attributes (no CSS conflict)
+    el.setAttribute('stroke-dasharray',  len);
+    el.setAttribute('stroke-dashoffset', len);   // fully hidden
+    el.style.strokeDasharray  = len;              // backup inline style
+    el.style.strokeDashoffset = len;
 
-    // Set dasharray inline (must equal len for the dash trick to work)
-    el.style.strokeDasharray  = len;
-    el.style.strokeDashoffset = len; // fully hidden at start
+    const startTime = performance.now();
 
-    // Animate dashoffset from len → 0
-    el.animate(
-      [
-        { strokeDashoffset: len },
-        { strokeDashoffset: 0   }
-      ],
-      {
-        duration: cfg.dur,
-        delay:    cfg.delay,
-        easing:   'cubic-bezier(0.4, 0, 0.2, 1)',
-        fill:     'forwards'   // stay visible after animation
+    function frame(now) {
+      const elapsed = now - startTime;
+      if (elapsed < delayMs) {
+        requestAnimationFrame(frame);
+        return;
       }
-    );
+      const t       = Math.min(1, (elapsed - delayMs) / durMs);
+      const eased   = easeOutCubic(t);
+      const offset  = len * (1 - eased);
+      el.setAttribute('stroke-dashoffset', offset);
+      el.style.strokeDashoffset = offset;
+      if (t < 1) requestAnimationFrame(frame);
+    }
+    requestAnimationFrame(frame);
+  }
+
+  // Sequence: A left leg → A right leg+loop+T arch → T vertical stem
+  [
+    { id: 'l-s1', delay: 100,  dur: 850  },  // A left leg
+    { id: 'l-s2', delay: 550,  dur: 1500 },  // A right leg → teardrop → T arch
+    { id: 'l-s3', delay: 1750, dur: 650  },  // T vertical stem
+  ].forEach(cfg => {
+    const el = document.getElementById(cfg.id);
+    if (el) animatePath(el, cfg.delay, cfg.dur);
   });
 
+  // Total animation: 1750 + 650 = 2400ms. Loader holds 3000ms minimum.
+
   // ── Loader progress bar
-  const LOADER_MIN_MS = 3200; // hold loader so logo fully completes (2500ms + safety)
+  const LOADER_MIN_MS = 3000; // hold loader: logo finishes at ~2400ms, 3000ms gives buffer
   const loaderStart   = Date.now();
 
   let progress = 0;

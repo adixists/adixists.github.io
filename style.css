@@ -215,11 +215,9 @@ body:hover .cursor-outer { opacity: 1; }
   overflow: visible;
 }
 
-/* Draw-on animation — fully controlled by JS Web Animations API */
-/* JS sets stroke-dasharray and animates stroke-dashoffset to 0 */
-#l-s1, #l-s2, #l-s3 {
-  stroke-dashoffset: 9999;  /* hidden by default until JS runs */
-}
+/* Draw-on animation fully controlled by JS via setAttribute + requestAnimationFrame.
+   No CSS hiding needed — JS sets initial dashoffset=length via setAttribute directly. */
+
 
 
 .loader-logo {
