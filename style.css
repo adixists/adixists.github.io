@@ -206,17 +206,40 @@ body:hover .cursor-outer { opacity: 1; }
   align-items: center;
   gap: 2rem;
   position: relative;
-  z-index: 1;
+/* ===== A-STAR IMAGE MASK STYLES ===== */
+.logo-image-mask {
+  -webkit-mask-image: url('logo_mask.png');
+  -webkit-mask-size: contain;
+  -webkit-mask-position: center;
+  -webkit-mask-repeat: no-repeat;
+  mask-image: url('logo_mask.png');
+  mask-size: contain;
+  mask-position: center;
+  mask-repeat: no-repeat;
+  background: linear-gradient(135deg, var(--glow-1), var(--glow-2));
+  position: relative;
+  overflow: hidden;
 }
 
-/* ===== A-STAR SVG LOGO STYLES ===== */
-.loader-svg {
-  display: block;
-  overflow: visible;
+.logo-sweep {
+  position: absolute;
+  top: 0;
+  left: -150%;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(to right, transparent, rgba(255, 255, 255, 0.9), transparent);
+  transform: skewX(-25deg);
 }
 
-/* Fragment assembly animation fully controlled by JS via SVG setAttribute.
-   Swoosh revealed via clipPath rect width animation. */
+@keyframes sweepReveal {
+  0% { left: -150%; }
+  100% { left: 200%; }
+}
+
+@keyframes cinematicReveal {
+  0% { filter: blur(15px); opacity: 0; transform: scale(1.4); }
+  100% { filter: blur(0px); opacity: 1; transform: scale(1); }
+}
 
 
 
@@ -224,7 +247,12 @@ body:hover .cursor-outer { opacity: 1; }
   width: 150px;
   height: 180px;
   position: relative;
-  animation: loaderLogoPulse 2.5s ease-in-out 2.3s infinite;
+}
+
+#loaderLogoMask {
+  width: 100%;
+  height: 100%;
+  opacity: 0; /* JS will trigger animation */
 }
 
 .loader-logo::after {
@@ -248,34 +276,28 @@ body:hover .cursor-outer { opacity: 1; }
   50%       { opacity: 0.75; transform: scale(1.15); }
 }
 
-/* Nav SVG logo */
-.nav-logo {
+/* Nav Logo */
+.nav-logo.logo-image-mask {
   width: 34px;
   height: 41px;
   display: block;
   cursor: pointer;
-  overflow: visible;
-  transition: filter 0.3s ease, transform 0.3s ease;
-  filter: drop-shadow(0 0 5px var(--glow-1));
+  transition: transform 0.3s ease, filter 0.3s ease;
+}
+.nav-logo.logo-image-mask:hover {
+  transform: scale(1.1);
+  filter: drop-shadow(0 0 10px var(--glow-1));
 }
 
-.nav-logo:hover {
-  transform: scale(1.12);
-  filter: drop-shadow(0 0 12px var(--glow-2)) drop-shadow(0 0 5px var(--glow-1));
-}
-
-/* Footer SVG logo */
-.footer-logo-svg {
+/* Footer Logo */
+.footer-logo-svg.logo-image-mask {
   width: 42px;
   height: 50px;
   display: block;
-  overflow: visible;
-  filter: drop-shadow(0 0 7px var(--glow-1));
   transition: filter 0.3s ease;
 }
-
-.footer-logo-svg:hover {
-  filter: drop-shadow(0 0 16px var(--glow-2));
+.footer-logo-svg.logo-image-mask:hover {
+  filter: drop-shadow(0 0 12px var(--glow-2));
 }
 
 .loader-progress-wrap {
