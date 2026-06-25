@@ -22,57 +22,72 @@ document.addEventListener('DOMContentLoaded', () => {
     'Welcome! 🚀'
   ];
 
-  // ── Logo draw animation — uses requestAnimationFrame + SVG setAttribute
-  // This is the most compatible approach: no WAAPI, no CSS var() in keyframes.
-  // setAttribute sets SVG presentation attributes directly (always supported).
+  // ── Logo fragment assembly animation — requestAnimationFrame
+  // Fragments fly in with scale, rotation, and opacity. Swoosh reveals via clipPath.
 
-  // Ease-out cubic: starts fast, decelerates to a stop
   function easeOutCubic(t) { return 1 - Math.pow(1 - t, 3); }
+  function easeOutBack(t) {
+    const c1 = 1.70158, c3 = c1 + 1;
+    return 1 + c3 * Math.pow(t - 1, 3) + c1 * Math.pow(t - 1, 2);
+  }
 
-  // Animate a single path: dashoffset from len→0 over [delayMs..delayMs+durMs]
-  function animatePath(el, delayMs, durMs) {
-    let len;
-    try { len = el.getTotalLength(); } catch(e) { len = 300; }
-    len = Math.ceil(len) + 2;
+  const LOGO_CX = 100, LOGO_CY = 124; // Center of logo in viewBox
 
-    // Set initial state via SVG attributes (no CSS conflict)
-    el.setAttribute('stroke-dasharray',  len);
-    el.setAttribute('stroke-dashoffset', len);   // fully hidden
-    el.style.strokeDasharray  = len;              // backup inline style
-    el.style.strokeDashoffset = len;
-
-    const startTime = performance.now();
-
+  /**
+   * Animate a logo fragment: opacity + scale + rotation + translate
+   * Uses SVG setAttribute for transforms (works correctly with masks/clips).
+   */
+  function animateFragment(el, delay, dur, s0, r0, tx0, ty0) {
+    if (!el) return;
+    el.setAttribute('opacity', '0');
+    const t0 = performance.now();
     function frame(now) {
-      const elapsed = now - startTime;
-      if (elapsed < delayMs) {
-        requestAnimationFrame(frame);
-        return;
-      }
-      const t       = Math.min(1, (elapsed - delayMs) / durMs);
-      const eased   = easeOutCubic(t);
-      const offset  = len * (1 - eased);
-      el.setAttribute('stroke-dashoffset', offset);
-      el.style.strokeDashoffset = offset;
+      const elapsed = now - t0;
+      if (elapsed < delay) { requestAnimationFrame(frame); return; }
+      const t = Math.min(1, (elapsed - delay) / dur);
+      const eL = easeOutCubic(t);      // smooth ease for opacity
+      const eB = easeOutBack(t);        // bouncy ease for transforms
+      const s  = s0 + (1 - s0) * eB;
+      const r  = r0 * (1 - eB);
+      const tx = tx0 * (1 - eB);
+      const ty = ty0 * (1 - eB);
+      el.setAttribute('opacity', Math.min(1, eL).toFixed(3));
+      el.setAttribute('transform',
+        'translate(' + (LOGO_CX + tx) + ',' + (LOGO_CY + ty) + ') scale(' + Math.max(0.01, s).toFixed(4) + ') rotate(' + r.toFixed(2) + ') translate(' + (-LOGO_CX) + ',' + (-LOGO_CY) + ')'
+      );
       if (t < 1) requestAnimationFrame(frame);
     }
     requestAnimationFrame(frame);
   }
 
-  // Sequence: A left leg → A right leg+loop+T arch → T vertical stem
-  [
-    { id: 'l-s1', delay: 100,  dur: 850  },  // A left leg
-    { id: 'l-s2', delay: 550,  dur: 1500 },  // A right leg → teardrop → T arch
-    { id: 'l-s3', delay: 1750, dur: 650  },  // T vertical stem
-  ].forEach(cfg => {
-    const el = document.getElementById(cfg.id);
-    if (el) animatePath(el, cfg.delay, cfg.dur);
-  });
+  /** Animate swoosh reveal: clip rect width from 0 → 220 (left to right) */
+  function animateSwooshReveal(rectEl, delay, dur) {
+    if (!rectEl) return;
+    const fullW = 220;
+    const t0 = performance.now();
+    function frame(now) {
+      const elapsed = now - t0;
+      if (elapsed < delay) { requestAnimationFrame(frame); return; }
+      const t = Math.min(1, (elapsed - delay) / dur);
+      const e = easeOutCubic(t);
+      rectEl.setAttribute('width', (fullW * e).toFixed(1));
+      if (t < 1) requestAnimationFrame(frame);
+    }
+    requestAnimationFrame(frame);
+  }
 
-  // Total animation: 1750 + 650 = 2400ms. Loader holds 3000ms minimum.
+  // ── Launch fragment assembly sequence ──
+  //                    element                           delay  dur  s0   r0   tx0  ty0
+  animateFragment(document.getElementById('l-f1'),         100,  800, 0.3, -12,   0, -30);  // Upper A — drops from top
+  animateFragment(document.getElementById('l-f2'),         300,  700, 0.4, -20, -40,  20);  // Left leg — flies from left
+  animateFragment(document.getElementById('l-f3'),         400,  700, 0.4,  20,  40,  20);  // Right leg — flies from right
+  animateSwooshReveal(document.getElementById('swoosh-reveal'), 800, 1200);                  // Swoosh — sweeps left to right
+  animateFragment(document.getElementById('l-f5'),        1800,  500, 0.5,   0,   0,  15);  // Serif — slides up from bottom
+
+  // Total animation: ~2300ms. Loader holds 4000ms for glow settle.
 
   // ── Loader progress bar
-  const LOADER_MIN_MS = 3000; // hold loader: logo finishes at ~2400ms, 3000ms gives buffer
+  const LOADER_MIN_MS = 4000; // hold loader: logo assembles ~2300ms, glow settles ~3500ms
   const loaderStart   = Date.now();
 
   let progress = 0;

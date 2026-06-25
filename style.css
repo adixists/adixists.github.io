@@ -209,22 +209,22 @@ body:hover .cursor-outer { opacity: 1; }
   z-index: 1;
 }
 
-/* ===== AT SVG LOGO STYLES ===== */
+/* ===== A-STAR SVG LOGO STYLES ===== */
 .loader-svg {
   display: block;
   overflow: visible;
 }
 
-/* Draw-on animation fully controlled by JS via setAttribute + requestAnimationFrame.
-   No CSS hiding needed — JS sets initial dashoffset=length via setAttribute directly. */
+/* Fragment assembly animation fully controlled by JS via SVG setAttribute.
+   Swoosh revealed via clipPath rect width animation. */
 
 
 
 .loader-logo {
-  width: 200px;
-  height: 134px;
+  width: 150px;
+  height: 180px;
   position: relative;
-  animation: loaderLogoPulse 2.5s ease-in-out 1.4s infinite;
+  animation: loaderLogoPulse 2.5s ease-in-out 2.3s infinite;
 }
 
 .loader-logo::after {
@@ -233,7 +233,7 @@ body:hover .cursor-outer { opacity: 1; }
   inset: -25px;
   border-radius: 50%;
   background: radial-gradient(ellipse, var(--glow-2) 0%, transparent 65%);
-  animation: logoGlowPulse 2.5s ease-in-out 1.4s infinite;
+  animation: logoGlowPulse 2.5s ease-in-out 2.3s infinite;
   z-index: -1;
   pointer-events: none;
 }
@@ -250,8 +250,8 @@ body:hover .cursor-outer { opacity: 1; }
 
 /* Nav SVG logo */
 .nav-logo {
-  width: 56px;
-  height: 38px;
+  width: 34px;
+  height: 41px;
   display: block;
   cursor: pointer;
   overflow: visible;
@@ -266,8 +266,8 @@ body:hover .cursor-outer { opacity: 1; }
 
 /* Footer SVG logo */
 .footer-logo-svg {
-  width: 70px;
-  height: 47px;
+  width: 42px;
+  height: 50px;
   display: block;
   overflow: visible;
   filter: drop-shadow(0 0 7px var(--glow-1));
