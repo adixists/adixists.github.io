@@ -206,53 +206,52 @@ body:hover .cursor-outer { opacity: 1; }
   align-items: center;
   gap: 2rem;
   position: relative;
-/* ===== A-STAR IMAGE MASK STYLES ===== */
-.logo-image-mask {
-  -webkit-mask-image: url('logo_mask.png');
-  -webkit-mask-size: contain;
-  -webkit-mask-position: center;
-  -webkit-mask-repeat: no-repeat;
-  mask-image: url('logo_mask.png');
-  mask-size: contain;
-  mask-position: center;
-  mask-repeat: no-repeat;
-  background: linear-gradient(135deg, var(--glow-1), var(--glow-2));
-  position: relative;
-  overflow: hidden;
+  z-index: 1;
 }
 
-.logo-sweep {
-  position: absolute;
-  top: 0;
-  left: -150%;
-  width: 50%;
-  height: 100%;
-  background: linear-gradient(to right, transparent, rgba(255, 255, 255, 0.9), transparent);
-  transform: skewX(-25deg);
+/* ===== LOGO IMAGE STYLES ===== */
+/* The logo is a black shape on transparent background.
+   Each theme applies CSS filters to colorize it appropriately. */
+
+.logo-img {
+  display: block;
+  object-fit: contain;
+  user-select: none;
+  -webkit-user-drag: none;
 }
 
-@keyframes sweepReveal {
-  0% { left: -150%; }
-  100% { left: 200%; }
+/* --- Dark theme: invert to white, then tint with accent color glow --- */
+[data-theme="dark"] .logo-img {
+  filter: invert(1) brightness(1.8) drop-shadow(0 0 6px var(--accent-1)) drop-shadow(0 0 14px var(--accent-2));
+  transition: filter 0.4s ease, transform 0.3s ease;
 }
 
-@keyframes cinematicReveal {
-  0% { filter: blur(15px); opacity: 0; transform: scale(1.4); }
-  100% { filter: blur(0px); opacity: 1; transform: scale(1); }
+/* --- Light theme: keep dark, subtle colored shadow --- */
+[data-theme="light"] .logo-img {
+  filter: brightness(0.15) drop-shadow(0 0 4px var(--accent-1));
+  transition: filter 0.4s ease, transform 0.3s ease;
+}
+
+/* --- Purple theme: deep purple tint --- */
+[data-theme="purple"] .logo-img {
+  filter: brightness(0.1) sepia(1) saturate(5) hue-rotate(250deg) drop-shadow(0 0 6px var(--accent-1)) drop-shadow(0 0 12px var(--accent-2));
+  transition: filter 0.4s ease, transform 0.3s ease;
 }
 
 
-
+/* ===== LOADER LOGO ===== */
 .loader-logo {
-  width: 150px;
-  height: 180px;
+  width: 160px;
+  height: 160px;
   position: relative;
 }
 
-#loaderLogoMask {
+.loader-logo-img {
   width: 100%;
   height: 100%;
-  opacity: 0; /* JS will trigger animation */
+  opacity: 0;
+  transform: scale(1.5);
+  /* JS triggers the cinematic reveal */
 }
 
 .loader-logo::after {
@@ -261,43 +260,72 @@ body:hover .cursor-outer { opacity: 1; }
   inset: -25px;
   border-radius: 50%;
   background: radial-gradient(ellipse, var(--glow-2) 0%, transparent 65%);
-  animation: logoGlowPulse 2.5s ease-in-out 2.3s infinite;
+  animation: logoGlowPulse 2.5s ease-in-out 2s infinite;
   z-index: -1;
   pointer-events: none;
 }
 
+@keyframes loaderLogoReveal {
+  0%   { opacity: 0; transform: scale(1.5); filter: blur(12px); }
+  60%  { opacity: 1; transform: scale(0.95); filter: blur(0px); }
+  80%  { transform: scale(1.03); }
+  100% { opacity: 1; transform: scale(1); filter: blur(0px); }
+}
+
 @keyframes loaderLogoPulse {
-  0%, 100% { filter: drop-shadow(0 0 10px var(--glow-1)) drop-shadow(0 0 22px var(--glow-2)); }
-  50%       { filter: drop-shadow(0 0 20px var(--glow-1)) drop-shadow(0 0 48px var(--glow-2)); }
+  0%, 100% { filter: drop-shadow(0 0 10px var(--accent-1)) drop-shadow(0 0 22px var(--accent-2)); }
+  50%      { filter: drop-shadow(0 0 20px var(--accent-1)) drop-shadow(0 0 48px var(--accent-2)); }
 }
 
 @keyframes logoGlowPulse {
   0%, 100% { opacity: 0.35; transform: scale(0.9); }
-  50%       { opacity: 0.75; transform: scale(1.15); }
+  50%      { opacity: 0.75; transform: scale(1.15); }
 }
 
-/* Nav Logo */
-.nav-logo.logo-image-mask {
-  width: 34px;
-  height: 41px;
-  display: block;
+@keyframes logoSweep {
+  0%   { left: -60%; }
+  100% { left: 120%; }
+}
+
+
+/* ===== NAV LOGO ===== */
+.nav-logo-img {
+  width: 36px;
+  height: 36px;
   cursor: pointer;
   transition: transform 0.3s ease, filter 0.3s ease;
 }
-.nav-logo.logo-image-mask:hover {
-  transform: scale(1.1);
-  filter: drop-shadow(0 0 10px var(--glow-1));
+.nav-logo-img:hover {
+  transform: scale(1.15);
+}
+[data-theme="dark"] .nav-logo-img:hover {
+  filter: invert(1) brightness(2.2) drop-shadow(0 0 12px var(--accent-1)) drop-shadow(0 0 24px var(--accent-2));
+}
+[data-theme="light"] .nav-logo-img:hover {
+  filter: brightness(0.1) drop-shadow(0 0 8px var(--accent-1)) drop-shadow(0 0 16px var(--accent-2));
+}
+[data-theme="purple"] .nav-logo-img:hover {
+  filter: brightness(0.05) sepia(1) saturate(6) hue-rotate(250deg) drop-shadow(0 0 12px var(--accent-1)) drop-shadow(0 0 24px var(--accent-2));
 }
 
-/* Footer Logo */
-.footer-logo-svg.logo-image-mask {
+
+/* ===== FOOTER LOGO ===== */
+.footer-logo-img {
   width: 42px;
-  height: 50px;
-  display: block;
-  transition: filter 0.3s ease;
+  height: 42px;
+  transition: filter 0.3s ease, transform 0.3s ease;
 }
-.footer-logo-svg.logo-image-mask:hover {
-  filter: drop-shadow(0 0 12px var(--glow-2));
+.footer-logo-img:hover {
+  transform: scale(1.1);
+}
+[data-theme="dark"] .footer-logo-img:hover {
+  filter: invert(1) brightness(2.2) drop-shadow(0 0 12px var(--accent-2));
+}
+[data-theme="light"] .footer-logo-img:hover {
+  filter: brightness(0.1) drop-shadow(0 0 8px var(--accent-2));
+}
+[data-theme="purple"] .footer-logo-img:hover {
+  filter: brightness(0.05) sepia(1) saturate(6) hue-rotate(250deg) drop-shadow(0 0 12px var(--accent-2));
 }
 
 .loader-progress-wrap {

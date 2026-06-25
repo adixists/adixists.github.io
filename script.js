@@ -23,21 +23,25 @@ document.addEventListener('DOMContentLoaded', () => {
   ];
 
   // ── Logo Cinematic Image Animation ──
-  // The logo image mask applies the theme gradient.
-  // We trigger a cinematic reveal (scale down + unblur) and an energy sweep.
+  // The logo.png image is styled with theme-adaptive CSS filters.
+  // We trigger a cinematic reveal: scale down + unblur + opacity in.
   
-  const logoMask = document.getElementById('loaderLogoMask');
-  const logoSweep = document.getElementById('logoSweep');
+  const loaderLogoImg = document.getElementById('loaderLogoImg');
   
-  if (logoMask) {
-    logoMask.style.animation = 'cinematicReveal 1.5s cubic-bezier(0.2, 0.8, 0.2, 1) forwards';
-  }
-  if (logoSweep) {
-    logoSweep.style.animation = 'sweepReveal 1.5s cubic-bezier(0.4, 0, 0.2, 1) 1.2s forwards';
+  if (loaderLogoImg) {
+    // Trigger cinematic reveal animation
+    loaderLogoImg.style.animation = 'loaderLogoReveal 1.8s cubic-bezier(0.16, 1, 0.3, 1) forwards';
+    
+    // After reveal, start gentle pulse
+    loaderLogoImg.addEventListener('animationend', () => {
+      const loaderLogo = document.getElementById('loaderLogo');
+      if (loaderLogo) {
+        loaderLogo.style.animation = 'loaderLogoPulse 2.5s ease-in-out infinite';
+      }
+    }, { once: true });
   }
 
-  // Total animation: 1.5s reveal + 1.5s sweep starting at 1.2s = ~2.7s.
-  // Loader holds 4000ms for glow settle.
+  // Total animation: ~1.8s reveal. Loader holds 4000ms for glow settle.
 
   // ── Loader progress bar
   const LOADER_MIN_MS = 4000; // hold loader: logo assembles ~2300ms, glow settles ~3500ms
