@@ -22,26 +22,42 @@ document.addEventListener('DOMContentLoaded', () => {
     'Welcome! 🚀'
   ];
 
-  // ── Logo Cinematic Image Animation ──
-  // The logo.png image is styled with theme-adaptive CSS filters.
-  // We trigger a cinematic reveal: scale down + unblur + opacity in.
-  
-  const loaderLogoImg = document.getElementById('loaderLogoImg');
-  
-  if (loaderLogoImg) {
-    // Trigger cinematic reveal animation
-    loaderLogoImg.style.animation = 'loaderLogoReveal 1.8s cubic-bezier(0.16, 1, 0.3, 1) forwards';
+  // ── AT SVG Monogram Draw Animation ──
+  const lPaths = [
+    document.getElementById('l-s1'),
+    document.getElementById('l-s2'),
+    document.getElementById('l-s3')
+  ];
+
+  let maxAnimTime = 0;
+  lPaths.forEach((path, index) => {
+    if (!path) return;
+    const length = path.getTotalLength();
+    path.style.strokeDasharray = length;
+    path.style.strokeDashoffset = length;
     
-    // After reveal, start gentle pulse
-    loaderLogoImg.addEventListener('animationend', () => {
-      const loaderLogo = document.getElementById('loaderLogo');
-      if (loaderLogo) {
-        loaderLogo.style.animation = 'loaderLogoPulse 2.5s ease-in-out infinite';
-      }
-    }, { once: true });
+    // Draw animation
+    const duration = 1500;
+    const delay = index * 400;
+    maxAnimTime = Math.max(maxAnimTime, duration + delay);
+    
+    path.animate([
+      { strokeDashoffset: length },
+      { strokeDashoffset: 0 }
+    ], {
+      duration: duration,
+      easing: 'cubic-bezier(0.25, 0.1, 0.25, 1)',
+      fill: 'forwards',
+      delay: delay // stagger drawing
+    });
+  });
+
+  const loaderLogo = document.getElementById('loaderLogo');
+  if (loaderLogo) {
+    loaderLogo.style.animation = 'loaderLogoPulse 2.5s ease-in-out 2.0s infinite';
   }
 
-  // Total animation: ~1.8s reveal. Loader holds 4000ms for glow settle.
+  // Total animation: ~2.3s reveal. Loader holds 4000ms for glow settle.
 
   // ── Loader progress bar
   const LOADER_MIN_MS = 4000; // hold loader: logo assembles ~2300ms, glow settles ~3500ms

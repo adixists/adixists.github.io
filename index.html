@@ -33,7 +33,24 @@
   <div class="loader" id="loader">
     <div class="loader-content">
       <div class="loader-logo" id="loaderLogo">
-        <img src="logo.png" alt="A-Star Logo" class="logo-img loader-logo-img" id="loaderLogoImg" />
+        <svg class="loader-svg" viewBox="0 0 240 160" xmlns="http://www.w3.org/2000/svg" aria-label="AT Monogram">
+          <defs>
+            <linearGradient id="l-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="#63b3ed"/>
+              <stop offset="50%" stop-color="#9f7aea"/>
+              <stop offset="100%" stop-color="#68d391"/>
+            </linearGradient>
+            <filter id="l-glow" x="-30%" y="-30%" width="160%" height="160%">
+              <feGaussianBlur stdDeviation="3.5" result="blur"/>
+              <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+            </filter>
+          </defs>
+          <g filter="url(#l-glow)" stroke="url(#l-grad)" stroke-linecap="round" stroke-linejoin="round" fill="none">
+            <path id="l-s1" d="M 30 148 L 95 10" stroke-width="6"/>
+            <path id="l-s2" d="M 95 10 L 120 96 C 126 114, 120 136, 108 140 C 96 144, 84 132, 86 116 C 88 100, 106 90, 124 86 Q 152 78, 178 66 Q 202 56, 222 60" stroke-width="5.5"/>
+            <path id="l-s3" d="M 194 62 L 194 148" stroke-width="6"/>
+          </g>
+        </svg>
       </div>
       <div class="loader-progress-wrap">
         <div class="loader-bar"><div class="loader-fill" id="loaderFill"></div></div>
@@ -45,7 +62,24 @@
   <!-- ===== NAVBAR ===== -->
   <nav class="navbar" id="navbar">
     <div class="nav-brand" id="navBrand">
-      <img src="logo.png" alt="A-Star Logo" class="logo-img nav-logo-img" />
+      <svg class="nav-logo" viewBox="0 0 240 160" xmlns="http://www.w3.org/2000/svg" aria-label="AT">
+        <defs>
+          <linearGradient id="n-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#63b3ed"/>
+            <stop offset="50%" stop-color="#9f7aea"/>
+            <stop offset="100%" stop-color="#68d391"/>
+          </linearGradient>
+          <filter id="n-glow" x="-30%" y="-30%" width="160%" height="160%">
+            <feGaussianBlur stdDeviation="2" result="blur"/>
+            <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+          </filter>
+        </defs>
+        <g filter="url(#n-glow)" stroke="url(#n-grad)" stroke-linecap="round" stroke-linejoin="round" fill="none">
+          <path id="n-s1" d="M 30 148 L 95 10" stroke-width="6"/>
+          <path id="n-s2" d="M 95 10 L 120 96 C 126 114, 120 136, 108 140 C 96 144, 84 132, 86 116 C 88 100, 106 90, 124 86 Q 152 78, 178 66 Q 202 56, 222 60" stroke-width="5.5"/>
+          <path id="n-s3" d="M 194 62 L 194 148" stroke-width="6"/>
+        </g>
+      </svg>
     </div>
     <ul class="nav-links" id="navLinks">
       <li><a href="#hero" class="nav-link active" data-section="hero">Home</a></li>
@@ -648,7 +682,24 @@
   <footer class="footer">
     <div class="footer-content">
       <div class="footer-brand">
-        <img src="logo.png" alt="A-Star Logo" class="logo-img footer-logo-img" />
+        <svg class="footer-logo-svg" viewBox="0 0 240 160" xmlns="http://www.w3.org/2000/svg" aria-label="AT">
+          <defs>
+            <linearGradient id="f-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="#63b3ed"/>
+              <stop offset="50%" stop-color="#9f7aea"/>
+              <stop offset="100%" stop-color="#68d391"/>
+            </linearGradient>
+            <filter id="f-glow" x="-30%" y="-30%" width="160%" height="160%">
+              <feGaussianBlur stdDeviation="2" result="blur"/>
+              <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+            </filter>
+          </defs>
+          <g filter="url(#f-glow)" stroke="url(#f-grad)" stroke-linecap="round" stroke-linejoin="round" fill="none">
+            <path id="f-s1" d="M 30 148 L 95 10" stroke-width="6"/>
+            <path id="f-s2" d="M 95 10 L 120 96 C 126 114, 120 136, 108 140 C 96 144, 84 132, 86 116 C 88 100, 106 90, 124 86 Q 152 78, 178 66 Q 202 56, 222 60" stroke-width="5.5"/>
+            <path id="f-s3" d="M 194 62 L 194 148" stroke-width="6"/>
+          </g>
+        </svg>
         <p>Aditya Tripathi · Full-Stack AI Developer</p>
       </div>
       <div class="footer-socials">

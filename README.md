@@ -1,89 +1,89 @@
-# Aditya Tripathi — Portfolio Website
+<div align="center">
+  <img src="https://capsule-render.vercel.app/api?type=waving&color=timeGradient&height=250&section=header&text=Aditya%20Tripathi&fontSize=90&fontAlignY=35&desc=AI-Powered%20Full-Stack%20Developer&descAlignY=55&descAlign=62" />
+  
+  <h2>✨ Cinematic & Interactive Personal Portfolio ✨</h2>
+  
+  <p>
+    <img src="https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=html5&logoColor=white" />
+    <img src="https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=css3&logoColor=white" />
+    <img src="https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black" />
+  </p>
+</div>
 
-> A fully-featured, advanced animated personal portfolio website for showcasing AI-powered full-stack development skills.
+<br/>
 
-## 🚀 Features
+> **Welcome to the next generation of personal branding.**  
+> A deeply interactive, animated, and theme-adaptive portfolio showcasing technical excellence, creative UI/UX design, and cutting-edge web development skills.
 
-- **3 Theme Options**: Dark (default), Light, and Light Purple — switchable from the navbar
-- **Interactive Particle Background**: Animated mesh network that reacts to mouse movement
-- **Custom Cursor**: Magnetic trailing cursor with hover effects
-- **Typewriter Role Animation**: Rotating typed roles in the hero section
-- **Glassmorphism UI**: Frosted glass cards with hover depth
-- **3D Tilt Cards**: Projects and timeline cards with mouse-responsive tilt effect
-- **Animated Skill Bars**: Progress bars that animate on scroll into view
-- **Counter Animation**: Numbers count up when section is visible
-- **Scroll Reveal**: Sections slide in from left/right/bottom on scroll
-- **Parallax Orbs**: Background glow orbs that respond to mouse movement
-- **Floating Tech Badges**: Animated floating labels around profile photo
-- **Animated Profile Border**: Rainbow gradient halo around profile image
-- **Smooth Loader**: Progress bar loader on initial page load
-- **Ripple Effect**: Click ripple on skill pills
-- **Contact Form**: Simulated form submission with success state
-- **Back-to-Top Button**: Appears on scroll, animated
-- **Active Nav Highlighting**: Nav link highlighted based on scroll position
-- **Mobile Responsive**: Full hamburger menu and adaptive layout
-- **SEO Optimized**: Meta tags, semantic HTML, proper headings
+<br/>
+
+## 🌟 Visual Excellence & Features
+
+<div align="center">
+  <img src="https://readme-typing-svg.herokuapp.com?font=Fira+Code&weight=600&size=24&duration=3000&pause=1000&color=63B3ED&center=true&vCenter=true&width=600&lines=3+Dynamic+Themes;Cinematic+SVG+Animations;Glassmorphism+UI;Interactive+Particle+Mesh" alt="Typing SVG" />
+</div>
+
+### 🎨 Theming System
+Experience the portfolio in 3 distinct visual environments, seamlessly switchable with smooth transitions:
+- 🌌 **Dark Mode (Default)**: Deep space noir with glowing electric blue and purple accents.
+- ☀️ **Light Mode**: Crisp, professional, and clean with royal blue and emerald hues.
+- 🔮 **Purple Mode**: Dreamy, vivid lavender aesthetic with pink and cyan glows.
+
+### 🚀 Cutting-Edge Interactivity
+- **Magnetic Custom Cursor**: A trailing particle cursor that magnetically attaches to interactive elements.
+- **Cinematic Loader**: An elegant "AT" SVG monogram that draws itself on screen before gracefully fading into the portfolio.
+- **Parallax Mesh Network**: A responsive background mesh that actively reacts to your mouse movements in real-time.
+- **3D Tilt Cards**: Project and timeline cards that dynamically tilt on hover using depth-perception styling.
+- **Scroll-Triggered Animations**: Elements organically fade, slide, and count up as you scroll down the page.
 
 ---
 
-## 📁 File Structure
+## 📁 Repository Architecture
 
+The project is built entirely with pure vanilla technologies for maximum performance without framework overhead.
+
+```text
+📦 Portfolio
+ ┣ 📜 index.html                 # Semantic structure & content
+ ┣ 📜 style.css                  # Advanced CSS animations, variables & theming
+ ┣ 📜 script.js                  # IntersectionObservers, logic, WAAPI animations
+ ┣ 🎬 Profile.mp4                # Hero section video avatar
+ ┣ 🖼️ buildathon_certificate.png # Timeline asset
+ ┣ 🖼️ hackfest_certificate.jpg   # Timeline asset
+ ┗ 🖼️ ideathon_certificate.jpg   # Timeline asset
 ```
-Portfolio/
-├── index.html      # Main HTML structure
-├── style.css       # All styles (themes, animations, responsive)
-├── script.js       # All interactivity and animations
-├── profile.jpg     # ⚠️ ADD YOUR PROFILE PHOTO HERE (rename to profile.jpg)
-└── README.md       # This file
-```
 
 ---
 
-## 🖼️ Adding Your Profile Photo
+## ⚡ Quick Start
 
-1. Locate the uploaded profile photo (the motorcycle photo)
-2. Rename or copy it as `profile.jpg` into this `Portfolio/` folder
-3. Open `index.html` in your browser — the photo will appear automatically
+No build steps, no package managers. Just pure web technology.
 
-> If no photo is found, the site gracefully shows an "AT" gradient placeholder.
+1. Clone or download the repository.
+2. Double click `index.html` to open it in your browser.
+3. Enjoy the cinematic experience. 
 
----
-
-## 🎨 Theme Options
-
-| Theme | Style | Colors |
-|-------|-------|--------|
-| 🌙 Dark | Deep space noir | Blue / Purple / Green |
-| ☀️ Light | Clean professional | Royal Blue / Violet / Emerald |
-| 💜 Purple | Dreamy lavender | Violet / Pink / Cyan |
+*(For the best experience, use a modern browser like Chrome, Edge, or Firefox).*
 
 ---
 
-## 🌐 Opening the Portfolio
+## 📬 Connect With Me
 
-Simply **double-click `index.html`** or open it in any modern browser. No server required!
+<div align="center">
+  
+  [![LinkedIn](https://img.shields.io/badge/LinkedIn-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white)](https://linkedin.com/in/adixists)
+  [![GitHub](https://img.shields.io/badge/GitHub-181717?style=for-the-badge&logo=github&logoColor=white)](https://github.com/adixists)
+  [![Email](https://img.shields.io/badge/Email-D14836?style=for-the-badge&logo=gmail&logoColor=white)](mailto:tripathi01aditya@gmail.com)
+  
+  <br/>
+  <br/>
+  
+  **Location:** Kanpur, Uttar Pradesh, India 📍 <br/>
+  **Phone:** +91 80905 06957 📞
+  
+</div>
 
-For best results, use Chrome, Edge, or Firefox.
-
----
-
-## 📬 Contact Info in Portfolio
-
-| Field | Value |
-|-------|-------|
-| Name | Aditya Tripathi |
-| Email | tripathi01aditya@gmail.com |
-| Phone | +91 80905 06957 |
-| GitHub | [github.com/adixists](https://github.com/adixists) |
-| LinkedIn | [linkedin.com/in/adixists](https://linkedin.com/in/adixists) |
-| Location | Kanpur, Uttar Pradesh, India |
-
----
-
-## 🛠️ Tech Stack
-
-Built with pure **HTML5, CSS3, and Vanilla JavaScript** — no frameworks, no build tools, zero dependencies beyond Google Fonts and Font Awesome (CDN).
-
----
-
-*Crafted with 💙 for the Web Development Internship Task 2*
+<br/>
+<div align="center">
+  <i>Crafted with 🩵 for the Web Development Internship Task</i>
+</div>
