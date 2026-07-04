@@ -47,7 +47,7 @@ The project is built entirely with pure vanilla technologies for maximum perform
  ┣ 📜 index.html                 # Semantic structure & content
  ┣ 📜 style.css                  # Advanced CSS animations, variables & theming
  ┣ 📜 script.js                  # IntersectionObservers, logic, WAAPI animations
- ┣ 🎬 Profile.mp4                # Hero section video avatar
+ ┣ 🖼️ profile.jpg                # Hero section profile photo
  ┣ 🖼️ buildathon_certificate.png # Timeline asset
  ┣ 🖼️ hackfest_certificate.jpg   # Timeline asset
  ┗ 🖼️ ideathon_certificate.jpg   # Timeline asset
