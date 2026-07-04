@@ -218,9 +218,26 @@ body:hover .cursor-outer { opacity: 1; }
   overflow: visible;
 }
 
+/* Typography Animations for Loader */
+.loader-svg .logo-a {
+  opacity: 0;
+  animation: logoDriftIn 1.6s cubic-bezier(0.16, 1, 0.3, 1) 0.2s forwards;
+}
+
+.loader-svg .logo-t {
+  opacity: 0;
+  animation: logoDriftIn 1.4s cubic-bezier(0.16, 1, 0.3, 1) 0.8s forwards;
+}
+
+@keyframes logoDriftIn {
+  0% { opacity: 0; transform: translateY(28px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+
 .loader-logo {
-  width: 200px;
-  height: 134px;
+  width: 170px;
+  height: 170px;
   position: relative;
   animation: loaderLogoPulse 2.5s ease-in-out 1.4s infinite;
 }
@@ -248,8 +265,8 @@ body:hover .cursor-outer { opacity: 1; }
 
 /* Nav SVG logo */
 .nav-logo {
-  width: 56px;
-  height: 38px;
+  width: 46px;
+  height: 46px;
   display: block;
   cursor: pointer;
   overflow: visible;
@@ -264,8 +281,8 @@ body:hover .cursor-outer { opacity: 1; }
 
 /* Footer SVG logo */
 .footer-logo-svg {
-  width: 70px;
-  height: 47px;
+  width: 60px;
+  height: 60px;
   display: block;
   overflow: visible;
   filter: drop-shadow(0 0 7px var(--glow-1));

@@ -31,7 +31,7 @@ Experience the portfolio in 3 distinct visual environments, seamlessly switchabl
 
 ### 🚀 Cutting-Edge Interactivity
 - **Magnetic Custom Cursor**: A trailing particle cursor that magnetically attaches to interactive elements.
-- **Cinematic Loader**: An elegant "AT" SVG monogram that draws itself on screen before gracefully fading into the portfolio.
+- **Cinematic Loader**: An elegant typographic "AT" monogram that gracefully drifts and fades onto the screen before transitioning into the portfolio.
 - **Parallax Mesh Network**: A responsive background mesh that actively reacts to your mouse movements in real-time.
 - **3D Tilt Cards**: Project and timeline cards that dynamically tilt on hover using depth-perception styling.
 - **Scroll-Triggered Animations**: Elements organically fade, slide, and count up as you scroll down the page.

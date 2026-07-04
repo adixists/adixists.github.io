@@ -13,7 +13,8 @@
   <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Syne:wght@400;500;600;700;800&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300&family=Pinyon+Script&display=swap" rel="stylesheet" />
 
   <!-- Icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
@@ -33,7 +34,7 @@
   <div class="loader" id="loader">
     <div class="loader-content">
       <div class="loader-logo" id="loaderLogo">
-        <svg class="loader-svg" viewBox="0 0 240 160" xmlns="http://www.w3.org/2000/svg" aria-label="AT Monogram">
+        <svg class="loader-svg typography-logo" viewBox="0 0 500 500" xmlns="http://www.w3.org/2000/svg" aria-label="AT Monogram">
           <defs>
             <linearGradient id="l-grad" x1="0%" y1="0%" x2="100%" y2="100%">
               <stop offset="0%" stop-color="#63b3ed"/>
@@ -45,10 +46,9 @@
               <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
             </filter>
           </defs>
-          <g filter="url(#l-glow)" stroke="url(#l-grad)" stroke-linecap="round" stroke-linejoin="round" fill="none">
-            <path id="l-s1" d="M 30 148 L 95 10" stroke-width="6"/>
-            <path id="l-s2" d="M 95 10 L 120 96 C 126 114, 120 136, 108 140 C 96 144, 84 132, 86 116 C 88 100, 106 90, 124 86 Q 152 78, 178 66 Q 202 56, 222 60" stroke-width="5.5"/>
-            <path id="l-s3" d="M 194 62 L 194 148" stroke-width="6"/>
+          <g filter="url(#l-glow)" fill="url(#l-grad)">
+            <text class="logo-a" x="55" y="375" font-family="'Pinyon Script', cursive" font-size="310" letter-spacing="-8">A</text>
+            <text class="logo-t" x="258" y="428" font-family="'Cormorant Garamond', serif" font-size="178" font-weight="300">T</text>
           </g>
         </svg>
       </div>
@@ -62,7 +62,7 @@
   <!-- ===== NAVBAR ===== -->
   <nav class="navbar" id="navbar">
     <div class="nav-brand" id="navBrand">
-      <svg class="nav-logo" viewBox="0 0 240 160" xmlns="http://www.w3.org/2000/svg" aria-label="AT">
+      <svg class="nav-logo typography-logo" viewBox="0 0 500 500" xmlns="http://www.w3.org/2000/svg" aria-label="AT">
         <defs>
           <linearGradient id="n-grad" x1="0%" y1="0%" x2="100%" y2="100%">
             <stop offset="0%" stop-color="#63b3ed"/>
@@ -74,10 +74,9 @@
             <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
           </filter>
         </defs>
-        <g filter="url(#n-glow)" stroke="url(#n-grad)" stroke-linecap="round" stroke-linejoin="round" fill="none">
-          <path id="n-s1" d="M 30 148 L 95 10" stroke-width="6"/>
-          <path id="n-s2" d="M 95 10 L 120 96 C 126 114, 120 136, 108 140 C 96 144, 84 132, 86 116 C 88 100, 106 90, 124 86 Q 152 78, 178 66 Q 202 56, 222 60" stroke-width="5.5"/>
-          <path id="n-s3" d="M 194 62 L 194 148" stroke-width="6"/>
+        <g filter="url(#n-glow)" fill="url(#n-grad)">
+          <text class="logo-a" x="55" y="375" font-family="'Pinyon Script', cursive" font-size="310" letter-spacing="-8">A</text>
+          <text class="logo-t" x="258" y="428" font-family="'Cormorant Garamond', serif" font-size="178" font-weight="300">T</text>
         </g>
       </svg>
     </div>
@@ -682,7 +681,7 @@
   <footer class="footer">
     <div class="footer-content">
       <div class="footer-brand">
-        <svg class="footer-logo-svg" viewBox="0 0 240 160" xmlns="http://www.w3.org/2000/svg" aria-label="AT">
+        <svg class="footer-logo-svg typography-logo" viewBox="0 0 500 500" xmlns="http://www.w3.org/2000/svg" aria-label="AT">
           <defs>
             <linearGradient id="f-grad" x1="0%" y1="0%" x2="100%" y2="100%">
               <stop offset="0%" stop-color="#63b3ed"/>
@@ -694,10 +693,9 @@
               <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
             </filter>
           </defs>
-          <g filter="url(#f-glow)" stroke="url(#f-grad)" stroke-linecap="round" stroke-linejoin="round" fill="none">
-            <path id="f-s1" d="M 30 148 L 95 10" stroke-width="6"/>
-            <path id="f-s2" d="M 95 10 L 120 96 C 126 114, 120 136, 108 140 C 96 144, 84 132, 86 116 C 88 100, 106 90, 124 86 Q 152 78, 178 66 Q 202 56, 222 60" stroke-width="5.5"/>
-            <path id="f-s3" d="M 194 62 L 194 148" stroke-width="6"/>
+          <g filter="url(#f-glow)" fill="url(#f-grad)">
+            <text class="logo-a" x="55" y="375" font-family="'Pinyon Script', cursive" font-size="310" letter-spacing="-8">A</text>
+            <text class="logo-t" x="258" y="428" font-family="'Cormorant Garamond', serif" font-size="178" font-weight="300">T</text>
           </g>
         </svg>
         <p>Aditya Tripathi · Full-Stack AI Developer</p>
