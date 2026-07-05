@@ -1,5 +1,5 @@
 <div align="center">
-  <img src="https://capsule-render.vercel.app/api?type=waving&color=timeGradient&height=250&section=header&text=Aditya%20Tripathi&fontSize=90&fontAlignY=35&desc=AI-Powered%20Full-Stack%20Developer&descAlignY=55&descAlign=62" />
+  <img src="https://capsule-render.vercel.app/api?type=waving&color=timeGradient&height=250&section=header&text=Aditya%20Tripathi&fontSize=90&fontAlignY=35&desc=AI-Powered%20Full-Stack%20Developer&descAlignY=62&descAlign=62" />
   
   <h2>✨ Cinematic & Interactive Personal Portfolio ✨</h2>
   
