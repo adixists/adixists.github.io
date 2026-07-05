@@ -123,6 +123,7 @@
 html {
   scroll-behavior: smooth;
   font-size: 16px;
+  overflow-x: hidden;
 }
 
 body {
@@ -1722,6 +1723,7 @@ body:hover .cursor-outer { opacity: 1; }
 
 @media (max-width: 768px) {
   .navbar { padding: 1rem 1.5rem; }
+  .navbar.scrolled { padding: 0.75rem 1.5rem; }
   .nav-links {
     position: fixed;
     top: 70px; left: 0; right: 0;
