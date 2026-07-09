@@ -22,199 +22,188 @@ document.addEventListener('DOMContentLoaded', () => {
     'Welcome! 🚀'
   ];
 
-  // ── AT SVG Monogram Typography Animation ──
-  // Typography animations (fade in + drift) are handled entirely via CSS keyframes 
-  // (logoDriftIn) in style.css. We only apply the continuous pulse here.
-  
   const loaderLogo = document.getElementById('loaderLogo');
   if (loaderLogo) {
     loaderLogo.style.animation = 'loaderLogoPulse 2.5s ease-in-out 1.8s infinite';
   }
 
-  // Total animation: ~1.8s drift reveal. Loader holds 4000ms for glow settle.
-
-  // ── Loader progress bar
-  const LOADER_MIN_MS = 4000; // hold loader: logo assembles ~2300ms, glow settles ~3500ms
+  const LOADER_MIN_MS = 4000;
   const loaderStart   = Date.now();
 
   let progress = 0;
   let msgIdx   = 0;
 
-  const loaderInterval = setInterval(() => {
-    progress += Math.random() * 22 + 8;
-    if (progress >= 100) { progress = 100; clearInterval(loaderInterval); }
+  if (loader && loaderFill && loaderText) {
+    const loaderInterval = setInterval(() => {
+      progress += Math.random() * 22 + 8;
+      if (progress >= 100) { progress = 100; clearInterval(loaderInterval); }
 
-    loaderFill.style.width = progress + '%';
+      loaderFill.style.width = progress + '%';
 
-    const newMsgIdx = Math.floor((progress / 100) * (loaderMessages.length - 1));
-    if (newMsgIdx !== msgIdx) {
-      msgIdx = newMsgIdx;
-      loaderText.textContent = loaderMessages[msgIdx];
-    }
+      const newMsgIdx = Math.floor((progress / 100) * (loaderMessages.length - 1));
+      if (newMsgIdx !== msgIdx) {
+        msgIdx = newMsgIdx;
+        loaderText.textContent = loaderMessages[msgIdx];
+      }
 
-    if (progress === 100) {
-      const elapsed   = Date.now() - loaderStart;
-      const remaining = Math.max(0, LOADER_MIN_MS - elapsed);
-      setTimeout(() => {
-        loader.classList.add('hidden');
-        document.body.style.overflow = '';
-        document.querySelectorAll('.hero .reveal-up, .hero .reveal-right').forEach(el => {
-          el.classList.add('visible');
-        });
-      }, remaining + 200);
-    }
-  }, 120);
-
-  document.body.style.overflow = 'hidden';
-
+      if (progress === 100) {
+        const elapsed   = Date.now() - loaderStart;
+        const remaining = Math.max(0, LOADER_MIN_MS - elapsed);
+        setTimeout(() => {
+          loader.classList.add('hidden');
+          document.body.style.overflow = '';
+          document.querySelectorAll('.hero .reveal-up, .hero .reveal-right').forEach(el => {
+            el.classList.add('visible');
+          });
+        }, remaining + 200);
+      }
+    }, 120);
+    document.body.style.overflow = 'hidden';
+  }
 
   // ========================
   // 2. CUSTOM CURSOR
   // ========================
   const cursorOuter = document.getElementById('cursorOuter');
   const cursorDot   = document.getElementById('cursorDot');
-  let mouseX = 0, mouseY = 0;
-  let outerX = 0, outerY = 0;
+  let mouseX = window.innerWidth / 2, mouseY = window.innerHeight / 2;
+  let outerX = window.innerWidth / 2, outerY = window.innerHeight / 2;
 
-  document.addEventListener('mousemove', e => {
-    mouseX = e.clientX;
-    mouseY = e.clientY;
-    cursorDot.style.left = mouseX + 'px';
-    cursorDot.style.top  = mouseY + 'px';
-  });
+  if (cursorOuter && cursorDot) {
+    document.addEventListener('mousemove', e => {
+      mouseX = e.clientX;
+      mouseY = e.clientY;
+      cursorDot.style.left = mouseX + 'px';
+      cursorDot.style.top  = mouseY + 'px';
+    });
 
-  function animateCursor() {
-    outerX += (mouseX - outerX) * 0.12;
-    outerY += (mouseY - outerY) * 0.12;
-    cursorOuter.style.left = outerX + 'px';
-    cursorOuter.style.top  = outerY + 'px';
-    requestAnimationFrame(animateCursor);
+    function animateCursor() {
+      outerX += (mouseX - outerX) * 0.12;
+      outerY += (mouseY - outerY) * 0.12;
+      cursorOuter.style.left = outerX + 'px';
+      cursorOuter.style.top  = outerY + 'px';
+      requestAnimationFrame(animateCursor);
+    }
+    animateCursor();
+
+    const interactives = document.querySelectorAll('a, button, .skill-pill, .project-card, .glass-card, input, textarea');
+    interactives.forEach(el => {
+      el.addEventListener('mouseenter', () => {
+        cursorOuter.style.transform = 'translate(-50%, -50%) scale(1.6)';
+        cursorOuter.style.borderColor = 'var(--accent-2)';
+      });
+      el.addEventListener('mouseleave', () => {
+        cursorOuter.style.transform = 'translate(-50%, -50%) scale(1)';
+        cursorOuter.style.borderColor = 'var(--accent-1)';
+      });
+    });
+
+    document.addEventListener('mouseleave', () => {
+      cursorOuter.style.opacity = '0';
+      cursorDot.style.opacity = '0';
+    });
+    document.addEventListener('mouseenter', () => {
+      cursorOuter.style.opacity = '1';
+      cursorDot.style.opacity = '1';
+    });
   }
-  animateCursor();
-
-  // Scale on interactive elements
-  const interactives = document.querySelectorAll('a, button, .skill-pill, .project-card, .glass-card');
-  interactives.forEach(el => {
-    el.addEventListener('mouseenter', () => {
-      cursorOuter.style.transform = 'translate(-50%, -50%) scale(1.6)';
-      cursorOuter.style.borderColor = 'var(--accent-2)';
-    });
-    el.addEventListener('mouseleave', () => {
-      cursorOuter.style.transform = 'translate(-50%, -50%) scale(1)';
-      cursorOuter.style.borderColor = 'var(--accent-1)';
-    });
-  });
-
-  // Hide cursor when not on page
-  document.addEventListener('mouseleave', () => {
-    cursorOuter.style.opacity = '0';
-    cursorDot.style.opacity = '0';
-  });
-  document.addEventListener('mouseenter', () => {
-    cursorOuter.style.opacity = '1';
-    cursorDot.style.opacity = '1';
-  });
-
 
   // ========================
   // 3. PARTICLE CANVAS
   // ========================
   const canvas = document.getElementById('particleCanvas');
-  const ctx    = canvas.getContext('2d');
+  if (canvas) {
+    const ctx = canvas.getContext('2d');
+    let particles = [];
+    let W = 0, H = 0;
 
-  let particles = [];
-  let W = 0, H = 0;
-
-  function resizeCanvas() {
-    W = canvas.width  = window.innerWidth;
-    H = canvas.height = window.innerHeight;
-  }
-  resizeCanvas();
-  window.addEventListener('resize', resizeCanvas);
-
-  function getParticleColor() {
-    const theme = document.documentElement.getAttribute('data-theme') || 'dark';
-    if (theme === 'dark')   return 'rgba(99, 179, 237,';
-    if (theme === 'light')  return 'rgba(37, 99, 235,';
-    if (theme === 'purple') return 'rgba(139, 92, 246,';
-    return 'rgba(99, 179, 237,';
-  }
-
-  class Particle {
-    constructor() { this.reset(); }
-    reset() {
-      this.x    = Math.random() * W;
-      this.y    = Math.random() * H;
-      this.vx   = (Math.random() - 0.5) * 0.4;
-      this.vy   = (Math.random() - 0.5) * 0.4;
-      this.r    = Math.random() * 2 + 0.5;
-      this.alpha = Math.random() * 0.5 + 0.2;
+    function resizeCanvas() {
+      W = canvas.width  = window.innerWidth;
+      H = canvas.height = window.innerHeight;
     }
-    update() {
-      this.x += this.vx;
-      this.y += this.vy;
-      if (this.x < 0 || this.x > W) this.vx *= -1;
-      if (this.y < 0 || this.y > H) this.vy *= -1;
-    }
-    draw() {
-      const color = getParticleColor();
-      ctx.beginPath();
-      ctx.arc(this.x, this.y, this.r, 0, Math.PI * 2);
-      ctx.fillStyle = color + this.alpha + ')';
-      ctx.fill();
-    }
-  }
+    resizeCanvas();
+    window.addEventListener('resize', resizeCanvas);
 
-  function initParticles(count = 80) {
-    particles = [];
-    for (let i = 0; i < count; i++) particles.push(new Particle());
-  }
+    function getParticleColor() {
+      const theme = document.documentElement.getAttribute('data-theme') || 'dark';
+      if (theme === 'dark')   return 'rgba(99, 179, 237,';
+      if (theme === 'light')  return 'rgba(37, 99, 235,';
+      if (theme === 'purple') return 'rgba(139, 92, 246,';
+      return 'rgba(99, 179, 237,';
+    }
 
-  function drawConnections() {
-    for (let i = 0; i < particles.length; i++) {
-      for (let j = i + 1; j < particles.length; j++) {
-        const dx = particles[i].x - particles[j].x;
-        const dy = particles[i].y - particles[j].y;
+    class Particle {
+      constructor() { this.reset(); }
+      reset() {
+        this.x    = Math.random() * W;
+        this.y    = Math.random() * H;
+        this.vx   = (Math.random() - 0.5) * 0.4;
+        this.vy   = (Math.random() - 0.5) * 0.4;
+        this.r    = Math.random() * 2 + 0.5;
+        this.alpha = Math.random() * 0.5 + 0.2;
+      }
+      update() {
+        this.x += this.vx;
+        this.y += this.vy;
+        if (this.x < 0 || this.x > W) this.vx *= -1;
+        if (this.y < 0 || this.y > H) this.vy *= -1;
+
+        // Optimized mouse repel (Moved from mousemove event to render loop)
+        const dx = this.x - mouseX;
+        const dy = this.y - mouseY;
         const dist = Math.sqrt(dx * dx + dy * dy);
-        if (dist < 120) {
-          const color = getParticleColor();
-          ctx.beginPath();
-          ctx.strokeStyle = color + (0.08 * (1 - dist / 120)) + ')';
-          ctx.lineWidth = 0.5;
-          ctx.moveTo(particles[i].x, particles[i].y);
-          ctx.lineTo(particles[j].x, particles[j].y);
-          ctx.stroke();
+        
+        if (dist > 0 && dist < 80) {
+          this.vx += (dx / dist) * 0.05;
+          this.vy += (dy / dist) * 0.05;
+          const maxV = 2;
+          this.vx = Math.max(-maxV, Math.min(maxV, this.vx));
+          this.vy = Math.max(-maxV, Math.min(maxV, this.vy));
+        }
+      }
+      draw() {
+        const color = getParticleColor();
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.r, 0, Math.PI * 2);
+        ctx.fillStyle = color + this.alpha + ')';
+        ctx.fill();
+      }
+    }
+
+    function initParticles(count = 80) {
+      particles = [];
+      for (let i = 0; i < count; i++) particles.push(new Particle());
+    }
+
+    function drawConnections() {
+      for (let i = 0; i < particles.length; i++) {
+        for (let j = i + 1; j < particles.length; j++) {
+          const dx = particles[i].x - particles[j].x;
+          const dy = particles[i].y - particles[j].y;
+          const dist = Math.sqrt(dx * dx + dy * dy);
+          if (dist < 120) {
+            const color = getParticleColor();
+            ctx.beginPath();
+            ctx.strokeStyle = color + (0.08 * (1 - dist / 120)) + ')';
+            ctx.lineWidth = 0.5;
+            ctx.moveTo(particles[i].x, particles[i].y);
+            ctx.lineTo(particles[j].x, particles[j].y);
+            ctx.stroke();
+          }
         }
       }
     }
+
+    function animateParticles() {
+      ctx.clearRect(0, 0, W, H);
+      drawConnections();
+      particles.forEach(p => { p.update(); p.draw(); });
+      requestAnimationFrame(animateParticles);
+    }
+
+    initParticles();
+    animateParticles();
   }
-
-  function animateParticles() {
-    ctx.clearRect(0, 0, W, H);
-    drawConnections();
-    particles.forEach(p => { p.update(); p.draw(); });
-    requestAnimationFrame(animateParticles);
-  }
-
-  initParticles();
-  animateParticles();
-
-  // Repel particles from mouse
-  document.addEventListener('mousemove', e => {
-    particles.forEach(p => {
-      const dx = p.x - e.clientX;
-      const dy = p.y - e.clientY;
-      const dist = Math.sqrt(dx * dx + dy * dy);
-      if (dist < 80) {
-        p.vx += (dx / dist) * 0.3;
-        p.vy += (dy / dist) * 0.3;
-        const maxV = 2;
-        p.vx = Math.max(-maxV, Math.min(maxV, p.vx));
-        p.vy = Math.max(-maxV, Math.min(maxV, p.vy));
-      }
-    });
-  });
-
 
   // ========================
   // 4. TYPEWRITER / ROLES
@@ -229,37 +218,38 @@ document.addEventListener('DOMContentLoaded', () => {
   ];
 
   const roleEl = document.getElementById('roleDynamic');
-  let roleIdx  = 0;
-  let charIdx  = 0;
-  let deleting = false;
-  let typingDelay = 80;
+  if (roleEl) {
+    let roleIdx  = 0;
+    let charIdx  = 0;
+    let deleting = false;
+    let typingDelay = 80;
 
-  function typeWriter() {
-    const current = roles[roleIdx];
-    if (!deleting) {
-      roleEl.textContent = current.slice(0, charIdx + 1);
-      charIdx++;
-      if (charIdx === current.length) {
-        deleting = true;
-        typingDelay = 2000; // Pause at full word
+    function typeWriter() {
+      const current = roles[roleIdx];
+      if (!deleting) {
+        roleEl.textContent = current.slice(0, charIdx + 1);
+        charIdx++;
+        if (charIdx === current.length) {
+          deleting = true;
+          typingDelay = 2000;
+        } else {
+          typingDelay = 80;
+        }
       } else {
-        typingDelay = 80;
+        roleEl.textContent = current.slice(0, charIdx - 1);
+        charIdx--;
+        if (charIdx === 0) {
+          deleting = false;
+          roleIdx  = (roleIdx + 1) % roles.length;
+          typingDelay = 400;
+        } else {
+          typingDelay = 45;
+        }
       }
-    } else {
-      roleEl.textContent = current.slice(0, charIdx - 1);
-      charIdx--;
-      if (charIdx === 0) {
-        deleting = false;
-        roleIdx  = (roleIdx + 1) % roles.length;
-        typingDelay = 400;
-      } else {
-        typingDelay = 45;
-      }
+      setTimeout(typeWriter, typingDelay);
     }
-    setTimeout(typeWriter, typingDelay);
+    setTimeout(typeWriter, 1500);
   }
-  setTimeout(typeWriter, 1500);
-
 
   // ========================
   // 5. NAVBAR SCROLL + ACTIVE
@@ -269,14 +259,15 @@ document.addEventListener('DOMContentLoaded', () => {
   const sections = document.querySelectorAll('section[id]');
 
   window.addEventListener('scroll', () => {
-    // Scrolled style
-    navbar.classList.toggle('scrolled', window.scrollY > 50);
+    if (navbar) {
+      navbar.classList.toggle('scrolled', window.scrollY > 50);
+    }
 
-    // Back to top
     const btt = document.getElementById('backToTop');
-    btt.classList.toggle('visible', window.scrollY > 400);
+    if (btt) {
+      btt.classList.toggle('visible', window.scrollY > 400);
+    }
 
-    // Active nav link
     let current = '';
     sections.forEach(section => {
       if (window.scrollY >= section.offsetTop - 200) {
@@ -288,17 +279,15 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  // Smooth scroll on nav click
   navLinks.forEach(link => {
     link.addEventListener('click', e => {
       e.preventDefault();
       const target = document.querySelector('#' + link.getAttribute('data-section'));
       if (target) target.scrollIntoView({ behavior: 'smooth' });
-      // Close mobile menu
-      document.getElementById('navLinks').classList.remove('open');
+      const navLinksEl = document.getElementById('navLinks');
+      if (navLinksEl) navLinksEl.classList.remove('open');
     });
   });
-
 
   // ========================
   // 6. HAMBURGER MENU
@@ -306,27 +295,26 @@ document.addEventListener('DOMContentLoaded', () => {
   const hamburger = document.getElementById('hamburger');
   const navLinksEl = document.getElementById('navLinks');
 
-  hamburger.addEventListener('click', () => {
-    navLinksEl.classList.toggle('open');
-    const spans = hamburger.querySelectorAll('span');
-    if (navLinksEl.classList.contains('open')) {
-      spans[0].style.transform = 'rotate(45deg) translate(5px, 5px)';
-      spans[1].style.opacity = '0';
-      spans[2].style.transform = 'rotate(-45deg) translate(5px, -5px)';
-    } else {
-      spans[0].style.transform = '';
-      spans[1].style.opacity = '';
-      spans[2].style.transform = '';
-    }
-  });
-
+  if (hamburger && navLinksEl) {
+    hamburger.addEventListener('click', () => {
+      navLinksEl.classList.toggle('open');
+      const spans = hamburger.querySelectorAll('span');
+      if (navLinksEl.classList.contains('open')) {
+        spans[0].style.transform = 'rotate(45deg) translate(5px, 5px)';
+        spans[1].style.opacity = '0';
+        spans[2].style.transform = 'rotate(-45deg) translate(5px, -5px)';
+      } else {
+        spans[0].style.transform = '';
+        spans[1].style.opacity = '';
+        spans[2].style.transform = '';
+      }
+    });
+  }
 
   // ========================
   // 7. THEME SWITCHER
   // ========================
   const themeBtns = document.querySelectorAll('.theme-btn');
-
-  // Theme color palettes for logo gradients
   const logoGradients = {
     dark:   { c1: '#63b3ed', c2: '#9f7aea', c3: '#68d391' },
     light:  { c1: '#2563eb', c2: '#7c3aed', c3: '#059669' },
@@ -335,7 +323,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function updateLogoGradients(theme) {
     const g = logoGradients[theme] || logoGradients.dark;
-    // Update all gradient definitions across all SVGs
     const gradIds = ['l-grad', 'n-grad', 'f-grad'];
     gradIds.forEach(id => {
       const grad = document.getElementById(id);
@@ -353,13 +340,10 @@ document.addEventListener('DOMContentLoaded', () => {
     themeBtns.forEach(btn => {
       btn.classList.toggle('active', btn.getAttribute('data-theme') === theme);
     });
-    // Re-init particles to update color
-    initParticles();
-    // Update logo gradient colors to match theme
+    // Triggers global getParticleColor correctly during next frame rendering
     updateLogoGradients(theme);
   }
 
-  // Load saved theme
   const savedTheme = localStorage.getItem('portfolio-theme') || 'dark';
   setTheme(savedTheme);
 
@@ -369,12 +353,10 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-
   // ========================
   // 8. SCROLL REVEAL
   // ========================
   const revealEls = document.querySelectorAll('.reveal-up, .reveal-left, .reveal-right');
-
   const revealObserver = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
@@ -383,15 +365,12 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     });
   }, { threshold: 0.12, rootMargin: '0px 0px -60px 0px' });
-
   revealEls.forEach(el => revealObserver.observe(el));
-
 
   // ========================
   // 9. SKILL BARS ANIMATION
   // ========================
   const skillBars = document.querySelectorAll('.skill-bar-fill');
-
   const barObserver = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
@@ -403,15 +382,12 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     });
   }, { threshold: 0.3 });
-
   skillBars.forEach(bar => barObserver.observe(bar));
-
 
   // ========================
   // 10. COUNTER ANIMATION
   // ========================
   const counters = document.querySelectorAll('.counter');
-
   const counterObserver = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
@@ -427,9 +403,7 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     });
   }, { threshold: 0.5 });
-
   counters.forEach(c => counterObserver.observe(c));
-
 
   // ========================
   // 11. CONTACT FORM
@@ -438,60 +412,78 @@ document.addEventListener('DOMContentLoaded', () => {
   const formSuccess = document.getElementById('formSuccess');
   const submitBtn   = document.getElementById('submitBtn');
 
-  contactForm.addEventListener('submit', e => {
-    e.preventDefault();
-    submitBtn.innerHTML = '<span>Sending...</span> <i class="fa-solid fa-circle-notch fa-spin"></i>';
-    submitBtn.disabled = true;
+  if (contactForm && formSuccess && submitBtn) {
+    contactForm.addEventListener('submit', e => {
+      e.preventDefault();
+      
+      // Safe DOM manipulation instead of innerHTML
+      submitBtn.textContent = '';
+      const sendSpan = document.createElement('span');
+      sendSpan.textContent = 'Sending... ';
+      const loadIcon = document.createElement('i');
+      loadIcon.className = 'fa-solid fa-circle-notch fa-spin';
+      submitBtn.appendChild(sendSpan);
+      submitBtn.appendChild(loadIcon);
+      submitBtn.disabled = true;
 
-    setTimeout(() => {
-      formSuccess.classList.add('show');
-      submitBtn.innerHTML = '<span>Send Message</span> <i class="fa-solid fa-paper-plane"></i>';
-      submitBtn.disabled = false;
-      contactForm.reset();
-      setTimeout(() => formSuccess.classList.remove('show'), 5000);
-    }, 1800);
-  });
-
+      setTimeout(() => {
+        formSuccess.classList.add('show');
+        
+        submitBtn.textContent = '';
+        const defaultSpan = document.createElement('span');
+        defaultSpan.textContent = 'Send Message ';
+        const defaultIcon = document.createElement('i');
+        defaultIcon.className = 'fa-solid fa-paper-plane';
+        submitBtn.appendChild(defaultSpan);
+        submitBtn.appendChild(defaultIcon);
+        
+        submitBtn.disabled = false;
+        contactForm.reset();
+        setTimeout(() => formSuccess.classList.remove('show'), 5000);
+      }, 1800);
+    });
+  }
 
   // ========================
   // 12. BACK TO TOP
   // ========================
-  document.getElementById('backToTop').addEventListener('click', () => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  });
-
+  const backToTopBtn = document.getElementById('backToTop');
+  if (backToTopBtn) {
+    backToTopBtn.addEventListener('click', () => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+  }
 
   // ========================
   // 13. PROFILE IMAGE FALLBACK
   // ========================
   const profileImg = document.getElementById('profileImg');
-  profileImg.addEventListener('error', () => {
-    // Create a beautiful gradient placeholder if image not found
-    const wrap = profileImg.parentElement;
-    profileImg.remove();
-    const placeholder = document.createElement('div');
-    placeholder.style.cssText = `
-      width: 100%; height: 100%;
-      background: linear-gradient(135deg, var(--accent-1), var(--accent-2));
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-family: 'Syne', sans-serif;
-      font-size: 5rem;
-      font-weight: 800;
-      color: #fff;
-      letter-spacing: -0.02em;
-    `;
-    placeholder.textContent = 'AT';
-    wrap.appendChild(placeholder);
-  });
-
+  if (profileImg) {
+    profileImg.addEventListener('error', () => {
+      const wrap = profileImg.parentElement;
+      profileImg.remove();
+      const placeholder = document.createElement('div');
+      placeholder.style.cssText = `
+        width: 100%; height: 100%;
+        background: linear-gradient(135deg, var(--accent-1), var(--accent-2));
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-family: 'Syne', sans-serif;
+        font-size: 5rem;
+        font-weight: 800;
+        color: #fff;
+        letter-spacing: -0.02em;
+      `;
+      placeholder.textContent = 'AT';
+      wrap.appendChild(placeholder);
+    });
+  }
 
   // ========================
   // 14. TILT EFFECT ON CARDS
   // ========================
   const tiltCards = document.querySelectorAll('.project-card, .timeline-card');
-
   tiltCards.forEach(card => {
     card.addEventListener('mousemove', e => {
       const rect = card.getBoundingClientRect();
@@ -509,19 +501,26 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-
   // ========================
   // 15. GLOWING ORBS PARALLAX
   // ========================
-  document.addEventListener('mousemove', e => {
-    const x = (e.clientX / window.innerWidth  - 0.5) * 30;
-    const y = (e.clientY / window.innerHeight - 0.5) * 30;
-    document.querySelectorAll('.hero-bg-orb').forEach((orb, i) => {
-      const factor = (i + 1) * 0.5;
-      orb.style.transform = `translate(${x * factor}px, ${y * factor}px)`;
-    });
-  });
+  const heroOrbs = document.querySelectorAll('.hero-bg-orb');
+  let tickingOrbs = false;
 
+  document.addEventListener('mousemove', e => {
+    if (!tickingOrbs) {
+      window.requestAnimationFrame(() => {
+        const x = (e.clientX / window.innerWidth  - 0.5) * 30;
+        const y = (e.clientY / window.innerHeight - 0.5) * 30;
+        heroOrbs.forEach((orb, i) => {
+          const factor = (i + 1) * 0.5;
+          orb.style.transform = `translate(${x * factor}px, ${y * factor}px)`;
+        });
+        tickingOrbs = false;
+      });
+      tickingOrbs = true;
+    }
+  });
 
   // ========================
   // 16. SKILL PILL RIPPLE
@@ -530,53 +529,43 @@ document.addEventListener('DOMContentLoaded', () => {
     pill.addEventListener('click', function(e) {
       const ripple = document.createElement('span');
       const rect = this.getBoundingClientRect();
-      ripple.style.cssText = `
-        position: absolute;
-        width: 20px; height: 20px;
-        background: var(--accent-1);
-        border-radius: 50%;
-        opacity: 0.4;
-        transform: scale(0);
-        animation: rippleOut 0.5s ease-out forwards;
-        left: ${e.clientX - rect.left - 10}px;
-        top: ${e.clientY - rect.top - 10}px;
-        pointer-events: none;
-      `;
+      ripple.className = 'ripple-effect';
+      ripple.style.left = `${e.clientX - rect.left - 10}px`;
+      ripple.style.top = `${e.clientY - rect.top - 10}px`;
+      
       this.style.position = 'relative';
       this.style.overflow = 'hidden';
       this.appendChild(ripple);
       setTimeout(() => ripple.remove(), 500);
     });
+    
+    // Accessibility: Trigger click on Enter key
+    pill.addEventListener('keydown', function(e) {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        this.click();
+      }
+    });
   });
-
-  // Ripple keyframe
-  const rippleStyle = document.createElement('style');
-  rippleStyle.textContent = `
-    @keyframes rippleOut {
-      to { transform: scale(5); opacity: 0; }
-    }
-  `;
-  document.head.appendChild(rippleStyle);
-
 
   // ========================
   // 17. ANIMATED GRADIENT BORDER ON HERO
   // ========================
   let gradAngle = 0;
   const profileImgWrap = document.querySelector('.profile-img-wrap');
-
-  function animateProfileBorder() {
-    gradAngle = (gradAngle + 0.5) % 360;
-    profileImgWrap.style.borderColor = 'transparent';
-    profileImgWrap.style.boxShadow = `
-      0 0 0 3px hsl(${gradAngle}, 80%, 60%),
-      0 0 40px rgba(99, 179, 237, 0.3),
-      0 0 80px rgba(159, 122, 234, 0.2)
-    `;
-    requestAnimationFrame(animateProfileBorder);
+  if (profileImgWrap) {
+    function animateProfileBorder() {
+      gradAngle = (gradAngle + 0.5) % 360;
+      profileImgWrap.style.borderColor = 'transparent';
+      profileImgWrap.style.boxShadow = `
+        0 0 0 3px hsl(${gradAngle}, 80%, 60%),
+        0 0 40px rgba(99, 179, 237, 0.3),
+        0 0 80px rgba(159, 122, 234, 0.2)
+      `;
+      requestAnimationFrame(animateProfileBorder);
+    }
+    animateProfileBorder();
   }
-  animateProfileBorder();
-
 
   // ========================
   // 18. SECTION BACKGROUND GLOW
